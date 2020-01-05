@@ -10,4 +10,5 @@ sd_self <- function(x) {
   }
   return(sqrt(sum_of_square/(length(x)-1)))
 }
-  
+
+#mean
