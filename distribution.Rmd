@@ -1,0 +1,51 @@
+---
+title: "Probability distribution"
+author: "hunglin"
+date: "1/5/2020"
+output: html_document
+---
+## Usage
++ dnorm(x, mean = 0, sd = 1, log = FALSE)
++ pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
++ qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
++ rnorm(n, mean = 0, sd = 1)  
+
+## Arguments
++ x, q	vector of quantiles.  
++ p	 vector of probabilities.
++ n	 number of observations. If length(n) > 1, the length is taken to be the number required.  
++ mean	vector of means.
++ sd	vector of standard deviations.
++ log, log.p	logical; if TRUE, probabilities p are given as log(p).  
++ lower.tail	logical; if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+
+***
+
+```{r basic}
+# extract 10 values from 0-1 standard normal distribution
+rnorm_10 <- rnorm(n = 10,mean = 20, sd = 5)
+print(rnorm_10)
+
+dnorm(rnorm_10) # the density of the values
+#qnorm()
+
+qnorm(c(0.05, 0.95, 0.05/2, 0.95/2, 0.5)) # z score
+pnorm(qnorm(c(0.05, 0.95, 0.05/2, 0.95/2, 0.5)) )
+```
+
+## Plot a normal distribution
+
+make the values for normal distribution
+```{r}
+randnorm <- rnorm(10000) # make 10000 values
+randdensity <- dnorm(randnorm) # a probability of a value 
+library(ggplot2)
+ggplot(data.frame(x = randnorm, y = randdensity)) + aes(x = x, y = y) + geom_point() + 
+  labs(x = "Random Normal Variables", y = "Density")
+randprob <- pnorm(randnorm)
+randquan <- qnorm(randprob)
+ggplot(data.frame(x = randprob, y = randquan)) + aes(x = x, y = y) + geom_point() + 
+  labs(x = "Probability", y = "Quantile")
+```
+
+

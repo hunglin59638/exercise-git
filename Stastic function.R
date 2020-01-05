@@ -1,4 +1,4 @@
-# Usual stastic funcion
+# Usual statisstic funcion
 data("iris")
 x <- iris$Sepal.Length
 # standard error
