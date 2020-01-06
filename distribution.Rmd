@@ -35,7 +35,7 @@ pnorm(qnorm(c(0.05, 0.95, 0.05/2, 0.95/2, 0.5)) )
 
 ## Plot a normal distribution
 
-make the values for normal distribution
+Make the values for normal distribution
 ```{r}
 randnorm <- rnorm(10000) # make 10000 values
 randdensity <- dnorm(randnorm) # a probability of a value 
@@ -48,4 +48,32 @@ ggplot(data.frame(x = randprob, y = randquan)) + aes(x = x, y = y) + geom_point(
   labs(x = "Probability", y = "Quantile")
 ```
 
+```{r}
+#plot a distribution
+p <- ggplot(data.frame(x = randnorm, y = randdensity)) + aes(x = x, y = y) + 
+  geom_line() + labs(x = "x", y = "Density")
+#count the area of shadow under the curve
+neg1seq <- seq(from = min(randnorm), to = -1, by = .1)
+lessthanneg1 <- data.frame(x = neg1seq, y = dnorm(neg1seq))
+head(lessthanneg1)
+lessthanneg1 <- rbind(c(min(randnorm), 0),
+                      lessthanneg1,
+                      c(max(lessthanneg1$x), 0)
+                      )
+# define part of shadow with `polygon`
+p + geom_polygon(data = lessthanneg1, aes(x = x, y =y))
+```
+
+```{r}
+#Build a sequence from 1 to -1
+neg1pos1seq <- seq(from = -1, to = 1, by = .1)
+neg1to1 <- data.frame(x = neg1pos1seq, y = dnorm(neg1pos1seq))
+neg1to1 <- rbind(c(min(neg1to1$x), 0),
+                 neg1to1, 
+                 c(max(neg1to1$x),0)
+                 )
+p + geom_polygon(data = neg1to1, aes(x= x, y=y))
+```
+
+## Binomial distribution
 
